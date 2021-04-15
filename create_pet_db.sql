@@ -6,7 +6,8 @@ drop table if exists pets;
 
 create table pets (
     pet_id int(11) not null auto_increment,
-    pet_type_id int(11) not null auto increment,
+    pet_type_id int(11) not null auto_increment,
+    pet_breed_id int(11) not null auto_increment,
     pet_name varchar(30) not null,
     primary key (pet_id)
 );
