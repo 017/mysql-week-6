@@ -29,32 +29,32 @@ public class Pet {
 	}
 
 	private void setPetBreedName(String pet_breed_name_input) {
-		// TODO Auto-generated method stub
+		this.pet_breed_name = pet_breed_name_input;
 		
 	}
 
 	private void setPetBreedID(int pet_breed_id_input) {
-		// TODO Auto-generated method stub
+		this.pet_breed_id = pet_breed_id_input;
 		
 	}
 
 	private void setPetTypeName(String pet_type_name_input) {
-		// TODO Auto-generated method stub
+		this.pet_type_name = pet_type_name_input;
 		
 	}
 
 	private void setPetTypeID(int pet_type_id_input) {
-		// TODO Auto-generated method stub
+		this.pet_type_id = pet_type_id_input;
 		
 	}
 
 	private void setPetName(String pet_name_input) {
-		// TODO Auto-generated method stub
+		this.pet_name = pet_name_input;
 		
 	}
 
 	private void setPetID(int pet_id_input) {
-		// TODO Auto-generated method stub
+		this.pet_id = pet_id_input;
 		
 	}
 }
