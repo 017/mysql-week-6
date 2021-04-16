@@ -71,7 +71,7 @@ public class Pet {
 	}
 	
 	public int getPetTypeID() {
-		return this.pet_type_name;
+		return this.pet_type_id;
 	}
 	
 	public String getPetBreedName() {
