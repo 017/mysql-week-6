@@ -26,4 +26,18 @@ public class PetDao {
 		ps.setInt(1, pet_target_id);
 		ps.executeUpdate();
 	}
+	
+	public void editPetByID(
+			int pet_target_id, 
+			String pet_name, 
+			String pet_type, 
+			String pet_breed
+			) throws SQLException {
+		PreparedStatement ps = connection.prepareStatement(EDIT_PET_BY_ID_QUERY);
+		ps.setInt(1, pet_target_id);
+		ps.setInt(2, pet_name);
+		ps.setInt(3, pet_type);
+		ps.setInt(4, pet_breed);
+		ps.executeUpdate();
+	}
 }

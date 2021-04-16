@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import dao.PetDao;
+import entity.Pizza;
 
 public class Menu {
 	private PetDao petDao;
@@ -42,6 +43,7 @@ public class Menu {
 				} else if (selection.equals("7")) {
 					this.editPet();
 				}
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -58,28 +60,50 @@ public class Menu {
 		petDao.deletePetByID(id);
 	}
 
-	private void createPet() {
-		// TODO Auto-generated method stub
-		
+	private void createPet() throws SQLException {
+		System.out.print("Enter Pizza ID: ");
+		int petID = Integer.parseInt(scanner.nextLine());
+		System.out.print("Enter Pizza Name: ");
+		String petName = scanner.nextLine();
+		System.out.print("Enter Pet Type: ");
+		String petType = scanner.nextLine();
+		System.out.print("Enter Pet Breed: ");
+		String petBreed = scanner.nextLine();
+		pizzaDao.createNewPizza(petID, petName, petType, petBreed);
 	}
 
 	private void displayPetByID() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	private void displayPetsByBreed() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	private void displayPetsByType() {
-		// TODO Auto-generated method stub
 		
 	}
 
-	private void displayallPets() {
-		// TODO Auto-generated method stub
-		
+	private void displayallPets() throws SQLException {
+		List<Pet> pets = petDao.getPets();
+		for (Pet pet : pets) {
+			System.out.println(
+			pet.getPetID() + ": Name: " + 
+			pet.getPetName() + " | Type: " + 
+			pet.getPetTypeName() + " | Breed: " + 
+			pet.getPetBreedName());
+		}
+	}
+
+	private void editPet() throws SQLException {
+		System.out.print("Enter Pet ID to Edit: ");
+		int id = Integer.parseInt(scanner.nextLine());
+		System.out.print("Enter New Pet Name: ");
+		String name = scanner.nextLine();
+		System.out.print("Enter New Pet Type: (Dog, Cat, Bird, Fish, etc)");
+		String type = scanner.nextLine();
+		System.out.print("Enter New Pet Breed: (Bulldog, Shiba Inu, Pug, Bombay, etc.)");
+		String breed = scanner.nextLine();
+		petDao.editPetByID(id, name, type, breed);
 	}
 }
