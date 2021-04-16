@@ -28,19 +28,19 @@ public class Menu {
 			try {
 
 				if (selection.equals("1")) {
-					displayallPets();
+					this.displayallPets();
 				} else if (selection.equals("2")) {
-					displayPetsByType();
+					this.displayPetsByType();
 				} else if (selection.equals("3")) {
-					displayPetsByBreed();
+					this.displayPetsByBreed();
 				} else if (selection.equals("4")) {
-					displayPetByID();
+					this.displayPetByID();
 				} else if (selection.equals("5")) {
-					createPet();
+					this.createPet();
 				} else if (selection.equals("6")) {
-					deletePet();
+					this.deletePet();
 				} else if (selection.equals("7")) {
-					editPet();
+					this.editPet();
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
