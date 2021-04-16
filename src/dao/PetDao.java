@@ -1,6 +1,8 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class PetDao {
 
@@ -17,5 +19,11 @@ public class PetDao {
 	
 	public PetDao() {
 		connection = DBConnection.getConnection();
+	}
+	
+	public void deletePetByID(int pet_target_id) throws SQLException {
+		PreparedStatement ps = connection.prepareStatement(DELETE_PET_BY_ID_QUERY);
+		ps.setInt(1, pet_target_id);
+		ps.executeUpdate();
 	}
 }
