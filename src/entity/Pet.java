@@ -57,4 +57,28 @@ public class Pet {
 		this.pet_id = pet_id_input;
 		
 	}
+	
+	public int getPetID() {
+		return this.pet_id;
+	}
+	
+	public String getPetName() {
+		return this.pet_name;
+	}
+	
+	public String getPetTypeName() {
+		return this.pet_type_name;
+	}
+	
+	public int getPetTypeID() {
+		return this.pet_type_name;
+	}
+	
+	public String getPetBreedName() {
+		return this.pet_breed_name;
+	}
+	
+	public int getPetBreedID() {
+		return this.pet_breed_id;
+	}
 }
