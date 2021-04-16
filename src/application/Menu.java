@@ -72,7 +72,7 @@ public class Menu {
 		pet.createNewPizza(petID, petName, petType, petBreed);
 	}
 
-	private void displayPetByID()throws SQLException {
+	private void displayPetByID() throws SQLException {
 		System.out.print("Enter pizza ID: ");
 		int id = Integer.parseInt(scanner.nextLine());
 		Pet pet = petDao.getPetByID(id);
@@ -80,11 +80,11 @@ public class Menu {
 		System.out.println("\tPet ID: " + pet.getPetID() + " Pet Name:" + pet.getPetName() + " Pet Price: " + pet.getPetPrice());
 	}
 
-	private void displayPetsByBreed() {
+	private void displayPetsByBreed() throws SQLException {
 		
 	}
 
-	private void displayPetsByType() {
+	private void displayPetsByType() throws SQLException{
 		
 	}
 
