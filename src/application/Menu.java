@@ -1,12 +1,6 @@
 package application;
 
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
-
-import dao.PetDao;
-import entity.Pizza;
 
 public class Menu {
 	private PetDao petDao;
