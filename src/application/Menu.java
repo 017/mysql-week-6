@@ -69,11 +69,15 @@ public class Menu {
 		String petType = scanner.nextLine();
 		System.out.print("Enter Pet Breed: ");
 		String petBreed = scanner.nextLine();
-		pizzaDao.createNewPizza(petID, petName, petType, petBreed);
+		pet.createNewPizza(petID, petName, petType, petBreed);
 	}
 
-	private void displayPetByID() {
-		
+	private void displayPetByID()throws SQLException {
+		System.out.print("Enter pizza ID: ");
+		int id = Integer.parseInt(scanner.nextLine());
+		Pet pet = petDao.getPetByID(id);
+		System.out.println(pet.getPetID() + ": " + pet.getPetName());
+		System.out.println("\tPet ID: " + pet.getPetID() + " Pet Name:" + pet.getPetName() + " Pet Price: " + pet.getPetPrice());
 	}
 
 	private void displayPetsByBreed() {
