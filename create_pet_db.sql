@@ -12,12 +12,12 @@ create table pets (
     pet_id int(11) not null auto_increment,
     pet_type_id int(11) not null,
     pet_breed_id int(11) not null,
-    --pet_costume_id int(11),
+    pet_costume_id int(11),
     pet_name varchar(30) not null,
-    --pet_gender char(1) not null,
-    --pet_birthday date,
+    pet_gender char(1) not null,
+    pet_birthday date,
     primary key (pet_id),
-    --foreign key (pet_costume_id) references costumes(costume_id)
+    foreign key (pet_costume_id) references costumes(costume_id)
 );
 
 create table pet_types (
