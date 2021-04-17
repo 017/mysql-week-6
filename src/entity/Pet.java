@@ -18,7 +18,7 @@ public class Pet {
 			String pet_name_input, 
 			String pet_type_name_input, 
 			String pet_breed_name_input,
-			char pet_gender_input,
+			String pet_gender_input,
 			String pet_birthday_input
 			) {
 		// Primary Pet Information Input
@@ -36,11 +36,11 @@ public class Pet {
 	}
 
 	private void setPetGender(String pet_gender_input) {
-		this.pet_gender_input = pet_gender_input;
+		this.pet_gender = pet_gender_input;
 	}
 
 	private void setPetBirthday(String pet_birthday_input) {
-		this.pet_gender_input = pet_birthday_input;
+		this.pet_gender = pet_birthday_input;
 	}
 
 	private void setPetBreedName(String pet_breed_name_input) {
@@ -89,6 +89,14 @@ public class Pet {
 	
 	public String getPetBreedName() {
 		return this.pet_breed_name;
+	}
+	
+	public String getPetGender() {
+		return this.pet_gender;
+	}
+	
+	public String getPetBirthday() {
+		return this.pet_birthday;
 	}
 	
 	public int getPetBreedID() {
