@@ -127,7 +127,7 @@ public class PetDao {
 		PreparedStatement ps = connection.prepareStatement(GET_PET_BY_ID_QUERY);
 		ps.setInt(1, pet_target_id);
 		ResultSet rs = ps.executeQuery();
-		if (rs.next()) return populatePet(
+		return populatePet(
 			rs.getInt(1),
 			rs.getInt(2),
 			rs.getInt(3),
@@ -170,7 +170,7 @@ public class PetDao {
 				rs.getString(5),
 				rs.getString(6)));
 		}
-		if (rs.next()) return pets;
+		return pets;
 	}
 	
 	public List<Pet> getPetsByType(String typeName) throws SQLException {
@@ -190,7 +190,7 @@ public class PetDao {
 				rs.getString(6)));
 		}
 		
-		if (rs.next()) return pets_by_type;
+		return pets_by_type;
 	}
 	
 	private Pet populatePet(
