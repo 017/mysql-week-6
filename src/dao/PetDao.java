@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +25,6 @@ public class PetDao {
 	
 	//TODO: make a SQL procedure for editing pets
 	private final String EDIT_PET_BY_ID_QUERY = "";
-	private final String CREATE_NEW_PET_QUERY = "CALL add_pet(@?, @?, @?, @?, @?, @?, @?);"; //MySQL variables need @ in front apparently
 	
     private final String INEXISTENT_COLUMN_PATTERN = "?";
     private final String DUPLICATE_DATA_PATTERN = "?";
@@ -143,25 +143,26 @@ public class PetDao {
 	}
 	
 	public void createPet(
-			int pet_id, 
-			int pet_type_id,
-			int pet_breed_id,
-			String pet_name, 
-			String pet_type_name, 
-			String pet_breed_name,
-			String pet_gender,
-			String pet_birthday
+				int pet_id_in, 
+				int pet_type_id_in,
+				int pet_breed_id_in,
+				String pet_name_in, 
+				String pet_type_name_in, 
+				String pet_breed_name_in,
+				String pet_gender_in,
+				String pet_birthday_in
 			) throws SQLException {
-		PreparedStatement ps = connection.prepareStatement(EDIT_PET_BY_ID_QUERY);
-		ps.setInt(1, pet_id);
-		ps.setInt(2, pet_type_id);
-		ps.setInt(3, pet_breed_id);
-		ps.setString(4, pet_name);
-		ps.setString(5, pet_type_name);
-		ps.setString(6, pet_breed_name);
-		ps.setString(7, pet_gender);
-		ps.setString(8, pet_birthday);
-		ps.executeUpdate();
+		String query = "{?=call add_pet(?, ?, ?, ?, ?, ?, ?, ?)}";
+		CallableStatement cs = connection.prepareCall(query);
+		cs.setInt(1, pet_id_in);
+		cs.setInt(2, pet_type_id_in);
+		cs.setInt(3, pet_breed_id_in);
+		cs.setString(4, pet_name_in);
+		cs.setString(5, pet_type_name_in);
+		cs.setString(6, pet_breed_name_in);
+		cs.setString(7, pet_gender_in);
+		cs.setString(8, pet_birthday_in);
+		cs.executeQuery();
 	}
 	
 	public List<Pet> getPets() throws SQLException {
@@ -170,14 +171,14 @@ public class PetDao {
 		List<Pet> pets = new ArrayList<Pet>();
 		while (rs.next()) {
 			pets.add(populatePet(
-					rs.getInt(1),
-					rs.getInt(2),
-					rs.getInt(3),
-					rs.getString(4),
-					rs.getString(5),
-					rs.getString(6),
-					rs.getString(7),
-					rs.getString(8)));
+				rs.getInt(1),
+				rs.getInt(2),
+				rs.getInt(3),
+				rs.getString(4),
+				rs.getString(5),
+				rs.getString(6),
+				rs.getString(7),
+				rs.getString(8)));
 		}
 		if (rs.next()) return pets;
 		throw new RuntimeException("Result is empty");
@@ -191,14 +192,14 @@ public class PetDao {
 		
 		while (rs.next()) {
 			pets_by_type.add(new Pet(
-					rs.getInt(1),
-					rs.getInt(2),
-					rs.getInt(3),
-					rs.getString(4),
-					rs.getString(5),
-					rs.getString(6),
-					rs.getString(7),
-					rs.getString(8)));
+				rs.getInt(1),
+				rs.getInt(2),
+				rs.getInt(3),
+				rs.getString(4),
+				rs.getString(5),
+				rs.getString(6),
+				rs.getString(7),
+				rs.getString(8)));
 		}
 		
 		if (rs.next()) return pets_by_type;
@@ -206,14 +207,14 @@ public class PetDao {
 	}
 	
 	private Pet populatePet(
-			int pet_id,
-			int pet_type_id, 
-			int pet_breed_id, 
-			String pet_name, 
-			String pet_type_name, 
-			String pet_breed_name,
-			String pet_gender,
-			String pet_birthday) {
+		int pet_id,
+		int pet_type_id, 
+		int pet_breed_id, 
+		String pet_name, 
+		String pet_type_name, 
+		String pet_breed_name,
+		String pet_gender,
+		String pet_birthday) {
 		
 		return new Pet(pet_id, pet_type_id, pet_breed_id, pet_name, pet_type_name, pet_breed_name, pet_gender, pet_birthday);
 	}
