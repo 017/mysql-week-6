@@ -54,29 +54,28 @@ public class PetDao {
 		ps.setString(5, new_pet_type);
 		ps.setString(6, new_pet_breed);
 		ResultSet rs = ps.executeQuery();
-		rs.next();
-		return populatePet(
-				rs.getInt(1),
-				rs.getInt(2),
-				rs.getInt(3),
-				rs.getString(4),
-				rs.getString(5),
-				rs.getString(6));
-				
+		if (rs.next()) return populatePet(
+			rs.getInt(1),
+			rs.getInt(2),
+			rs.getInt(3),
+			rs.getString(4),
+			rs.getString(5),
+			rs.getString(6));
+		throw new RuntimeException("Result set is empty");
 	}
 	
 	public Pet getPetByID(int pet_target_id) throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(GET_PET_BY_ID_QUERY);
 		ps.setInt(1, pet_target_id);
 		ResultSet rs = ps.executeQuery();
-		rs.next();
-		return populatePet(
-				rs.getInt(1),
-				rs.getInt(2),
-				rs.getInt(3),
-				rs.getString(4),
-				rs.getString(5),
-				rs.getString(6));
+		if (rs.next()) return populatePet(
+			rs.getInt(1),
+			rs.getInt(2),
+			rs.getInt(3),
+			rs.getString(4),
+			rs.getString(5),
+			rs.getString(6));
+		throw new RuntimeException("Result set is empty");
 	}
 	
 	public void createPet(
@@ -88,13 +87,18 @@ public class PetDao {
 			String pet_breed_name
 			) throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(EDIT_PET_BY_ID_QUERY);
-		ps.setInt(1, pet_id);
-		ps.setInt(2, pet_type_id);
-		ps.setInt(3, pet_breed_id);
-		ps.setString(4, pet_name);
-		ps.setString(5, pet_type_name);
-		ps.setString(6, pet_breed_name);
-		ps.executeUpdate();
+		try {
+			ps.setInt(1, pet_id);
+			ps.setInt(2, pet_type_id);
+			ps.setInt(3, pet_breed_id);
+			ps.setString(4, pet_name);
+			ps.setString(5, pet_type_name);
+			ps.setString(6, pet_breed_name);
+			ps.executeUpdate();
+		} 
+		catch (RuntimeException e) { throw e; }
+	    catch (Exception e) { throw new RuntimeException(e); }
+	    finally { try { if (connection != null) connection.close(); } catch (Throwable t) {} }
 	}
 	
 	public List<Pet> getPets() throws SQLException {
@@ -109,7 +113,8 @@ public class PetDao {
 					rs.getString(5),
 					rs.getString(6)));
 		}
-		return pets;
+		if (rs.next()) return pets;
+		throw new RuntimeException("Result set is empty");
 	}
 	
 	public List<Pet> getPetsByType(String typeName) throws SQLException {
@@ -128,7 +133,8 @@ public class PetDao {
 					rs.getString(6)));
 		}
 		
-		return pets_by_type;
+		if (rs.next()) return pets_by_type;
+		throw new RuntimeException("Result set is empty");
 	}
 	
 	private Pet populatePet(
@@ -137,9 +143,9 @@ public class PetDao {
 			int pet_breed_id, 
 			String pet_name, 
 			String pet_type_name, 
-			String pet_breed_name) throws SQLException {
+			String pet_breed_name) {
 		
 		return new Pet(pet_id, pet_type_id, pet_breed_id, pet_name, pet_type_name, pet_breed_name);
-		
 	}
+
 }
