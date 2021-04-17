@@ -18,8 +18,6 @@ public class PetDao {
 	private final String GET_PETS_BY_TYPE_QUERY = null;
 
 	private final String GET_PETS_BY_BREED_QUERY = null;
-	
-	private final String GET_PET_BY_ID_QUERY = "SELECT * FROM pets WHERE pet_id = ?";
 	private final String DELETE_PET_BY_ID_QUERY = "DELETE FROM pets WHERE pet_id = ?";
 	
 	//TODO: make a SQL procedure for editing pets
@@ -123,17 +121,24 @@ public class PetDao {
 		return result;
 	}
 	
+	private final String GET_PET_BY_ID_QUERY = "SELECT * FROM pets WHERE pet_id = ?";
 	public Pet getPetByID(int pet_target_id) throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(GET_PET_BY_ID_QUERY);
 		ps.setInt(1, pet_target_id);
 		ResultSet rs = ps.executeQuery();
-		return populatePet(
-			rs.getInt(1),
-			rs.getInt(2),
-			rs.getInt(3),
-			rs.getString(4),
-			rs.getString(5),
-			rs.getString(6));
+		Pet result = null;
+		if (rs.next()) {
+			result = populatePet(
+					rs.getInt(1),
+					rs.getInt(2),
+					rs.getInt(3),
+					rs.getString(4),
+					rs.getString(5),
+					rs.getString(6));
+		} else {
+			result = populatePet(-1, -1, -1, "No Data", "No Data", "No Data");
+		}
+		return result;
 	}
 	
 	public void createPet(
