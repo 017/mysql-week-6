@@ -14,7 +14,6 @@ import entity.Pet;
 public class PetDao {
 	private Connection connection;
 	private Scanner scanner = new Scanner(System.in);
-	private final String GET_PETS_QUERY = "SELECT * FROM pets";
 
 	private final String GET_PETS_BY_TYPE_QUERY = null;
 
@@ -135,7 +134,6 @@ public class PetDao {
 			rs.getString(4),
 			rs.getString(5),
 			rs.getString(6));
-		throw new RuntimeException("Result is empty");
 	}
 	
 	public void createPet(
@@ -157,7 +155,8 @@ public class PetDao {
 		cs.executeQuery();
 		
 	}
-	
+
+	private final String GET_PETS_QUERY = "SELECT * FROM pets";
 	public List<Pet> getPets() throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(GET_PETS_QUERY);
 		ResultSet rs = ps.executeQuery();
@@ -172,7 +171,6 @@ public class PetDao {
 				rs.getString(6)));
 		}
 		if (rs.next()) return pets;
-		throw new RuntimeException("Result is empty");
 	}
 	
 	public List<Pet> getPetsByType(String typeName) throws SQLException {
@@ -193,7 +191,6 @@ public class PetDao {
 		}
 		
 		if (rs.next()) return pets_by_type;
-		throw new RuntimeException("Result is empty");
 	}
 	
 	private Pet populatePet(
