@@ -181,6 +181,7 @@ public class PetDao {
 		ResultSet rs = ps.executeQuery();
 		List<Pet> pets_by_type = new ArrayList<Pet>();
 		
+		// TODO: change pets by type query to join pets with type table so we can retrieve data to add to the list here.
 		while (rs.next()) {
 			pets_by_type.add(new Pet(
 				rs.getInt(1),
