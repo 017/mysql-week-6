@@ -100,9 +100,6 @@ public class Menu {
 	}
 
 	private void displayallPets() throws SQLException {
-		// Exception in thread "main" java.lang.NullPointerException
-		// at mysql_week_6_petDB/application.Menu.displayallPets (here)
-		// null pointer though getPets returns a Pet?
 		List<Pet> pets = petDao.getPets();
 		for (Pet pet : pets) {
 			System.out.println(

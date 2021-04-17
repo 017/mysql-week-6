@@ -139,7 +139,7 @@ public class PetDao {
 			rs.getString(6),
 			rs.getString(7),
 			rs.getString(8));
-		throw new RuntimeException("Result set is empty");
+		throw new RuntimeException("Result is empty");
 	}
 	
 	public void createPet(
@@ -165,7 +165,8 @@ public class PetDao {
 	}
 	
 	public List<Pet> getPets() throws SQLException {
-		ResultSet rs = connection.prepareStatement(GET_PETS_QUERY).executeQuery();
+		PreparedStatement ps = connection.prepareStatement(GET_PETS_QUERY);
+		ResultSet rs = ps.executeQuery();
 		List<Pet> pets = new ArrayList<Pet>();
 		while (rs.next()) {
 			pets.add(populatePet(
@@ -179,7 +180,7 @@ public class PetDao {
 					rs.getString(8)));
 		}
 		if (rs.next()) return pets;
-		throw new RuntimeException("Result set is empty");
+		throw new RuntimeException("Result is empty");
 	}
 	
 	public List<Pet> getPetsByType(String typeName) throws SQLException {
@@ -201,7 +202,7 @@ public class PetDao {
 		}
 		
 		if (rs.next()) return pets_by_type;
-		throw new RuntimeException("Result set is empty");
+		throw new RuntimeException("Result is empty");
 	}
 	
 	private Pet populatePet(
