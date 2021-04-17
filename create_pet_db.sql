@@ -9,9 +9,9 @@ drop table if exists breeds;
 drop table if exists costumes;
 
 create table pets (
-    pet_id int not null auto_increment,
-    pet_type_id int not null,
-    pet_breed_id int not null,
+    pet_id int(11) not null auto_increment,
+    pet_type_id int(11) not null,
+    pet_breed_id int(11) not null,
     pet_costume_id int(11),
     pet_name varchar(30) not null,
     primary key (pet_id),
