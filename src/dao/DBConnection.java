@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DBConnection {
 	private final static String URL = "jdbc:mysql://localhost:3306/pet_db";
 	private final static String USERNAME = "root";
-	private final static String PASSWORD = "";
+	private final static String PASSWORD = "80gxCPHH8GhC";
 	private static Connection connection;
 	private static DBConnection instance;
 	
