@@ -12,7 +12,7 @@ import entity.Pet;
 //import entity.Outfit;
 
 public class Menu {
-	private PetDao petDao;
+	private PetDao petDao = new PetDao();
 	private Scanner scanner = new Scanner(System.in);
 	private List<String> options = Arrays.asList(
 			"Display All Pets",
@@ -72,15 +72,11 @@ public class Menu {
 		int breedID = Integer.parseInt(scanner.nextLine());
 		System.out.print("Enter Pet Name: ");
 		String petName = scanner.nextLine();
-		System.out.print("Enter Pet Type: ");
-		String petType = scanner.nextLine();
-		System.out.print("Enter Pet Breed: ");
-		String petBreed = scanner.nextLine();
 		System.out.print("Enter Pet Gender: ");
 		String petGender = scanner.nextLine();
 		System.out.print("Enter Pet Birthday: ");
 		String petBirthday = scanner.nextLine();
-		petDao.createPet(petID, typeID, breedID, petName, petType, petBreed, petGender, petBirthday);
+		petDao.createPet(petID, typeID, breedID, petName, petGender, petBirthday);
 	}
 
 	private void displayPetByID() throws SQLException {

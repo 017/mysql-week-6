@@ -69,9 +69,7 @@ public class PetDao {
 			rs.getInt(3),
 			rs.getString(4),
 			rs.getString(5),
-			rs.getString(6),
-			rs.getString(7),
-			rs.getString(8));
+			rs.getString(6));
 		throw new RuntimeException("Result set is empty");
 	}
 
@@ -136,9 +134,7 @@ public class PetDao {
 			rs.getInt(3),
 			rs.getString(4),
 			rs.getString(5),
-			rs.getString(6),
-			rs.getString(7),
-			rs.getString(8));
+			rs.getString(6));
 		throw new RuntimeException("Result is empty");
 	}
 	
@@ -147,22 +143,19 @@ public class PetDao {
 				int pet_type_id_in,
 				int pet_breed_id_in,
 				String pet_name_in, 
-				String pet_type_name_in, 
-				String pet_breed_name_in,
 				String pet_gender_in,
 				String pet_birthday_in
 			) throws SQLException {
-		String query = "{?=call add_pet(?, ?, ?, ?, ?, ?, ?, ?)}";
+		String query = "{call add_pet(?, ?, ?, ?, ?, ?)}";
 		CallableStatement cs = connection.prepareCall(query);
 		cs.setInt(1, pet_id_in);
 		cs.setInt(2, pet_type_id_in);
 		cs.setInt(3, pet_breed_id_in);
 		cs.setString(4, pet_name_in);
-		cs.setString(5, pet_type_name_in);
-		cs.setString(6, pet_breed_name_in);
-		cs.setString(7, pet_gender_in);
-		cs.setString(8, pet_birthday_in);
+		cs.setString(5, pet_gender_in);
+		cs.setString(6, pet_birthday_in);
 		cs.executeQuery();
+		
 	}
 	
 	public List<Pet> getPets() throws SQLException {
@@ -176,9 +169,7 @@ public class PetDao {
 				rs.getInt(3),
 				rs.getString(4),
 				rs.getString(5),
-				rs.getString(6),
-				rs.getString(7),
-				rs.getString(8)));
+				rs.getString(6)));
 		}
 		if (rs.next()) return pets;
 		throw new RuntimeException("Result is empty");
@@ -197,9 +188,7 @@ public class PetDao {
 				rs.getInt(3),
 				rs.getString(4),
 				rs.getString(5),
-				rs.getString(6),
-				rs.getString(7),
-				rs.getString(8)));
+				rs.getString(6)));
 		}
 		
 		if (rs.next()) return pets_by_type;
@@ -210,13 +199,11 @@ public class PetDao {
 		int pet_id,
 		int pet_type_id, 
 		int pet_breed_id, 
-		String pet_name, 
-		String pet_type_name, 
-		String pet_breed_name,
+		String pet_name,
 		String pet_gender,
 		String pet_birthday) {
 		
-		return new Pet(pet_id, pet_type_id, pet_breed_id, pet_name, pet_type_name, pet_breed_name, pet_gender, pet_birthday);
+		return new Pet(pet_id, pet_type_id, pet_breed_id, pet_name, pet_gender, pet_birthday);
 	}
 
 }
