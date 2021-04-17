@@ -24,9 +24,7 @@ public class PetDao {
 	
 	//TODO: make a SQL procedure for editing pets
 	private final String EDIT_PET_BY_ID_QUERY = "";
-	
-	//TODO: make a SQL procedure for entering new pets
-	private final String CREATE_NEW_PET_QUERY = "";
+	private final String CREATE_NEW_PET_QUERY = "CALL add_pet(@?, @?, @?, @?, @?, @?, @?);"; //MySQL variables need @ in front apparently
 	
     private final String INEXISTENT_COLUMN_PATTERN = "?";
     private final String DUPLICATE_DATA_PATTERN = "?";
