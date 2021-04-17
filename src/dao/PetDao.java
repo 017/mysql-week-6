@@ -90,20 +90,13 @@ public class PetDao {
 			String pet_breed_name
 			) throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(EDIT_PET_BY_ID_QUERY);
-		try {
-			ps.setInt(1, pet_id);
-			ps.setInt(2, pet_type_id);
-			ps.setInt(3, pet_breed_id);
-			ps.setString(4, pet_name);
-			ps.setString(5, pet_type_name);
-			ps.setString(6, pet_breed_name);
-			ps.executeUpdate();
-		} catch (SQLException e){
-            if (e.getErrorCode() == INEXISTENT_COLUMN_ERROR)
-                System.out.println("User friendly error message caused by column " + this.matchPattern(e.getMessage(), this.INEXISTENT_COLUMN_PATTERN));
-             if (e.getErrorCode() == DUPLICATE_DATA_ERROR)
-                 System.out.println("User friendly error message caused by duplicate data " + this.matchPattern(e.getMessage(), this.DUPLICATE_DATA_PATTERN));
-         }
+		ps.setInt(1, pet_id);
+		ps.setInt(2, pet_type_id);
+		ps.setInt(3, pet_breed_id);
+		ps.setString(4, pet_name);
+		ps.setString(5, pet_type_name);
+		ps.setString(6, pet_breed_name);
+		ps.executeUpdate();
 	}
 	
 	public List<Pet> getPets() throws SQLException {
