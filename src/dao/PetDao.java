@@ -28,6 +28,9 @@ public class PetDao {
 	//TODO: make a SQL procedure for entering new pets
 	private final String CREATE_NEW_PET_QUERY = "";
 	
+    private final String INEXISTENT_COLUMN_PATTERN = "?";
+    private final String DUPLICATE_DATA_PATTERN = "?";
+	
 	public PetDao() {
 		connection = DBConnection.getConnection();
 	}
@@ -95,10 +98,12 @@ public class PetDao {
 			ps.setString(5, pet_type_name);
 			ps.setString(6, pet_breed_name);
 			ps.executeUpdate();
-		} 
-		catch (RuntimeException e) { throw e; }
-	    catch (Exception e) { throw new RuntimeException(e); }
-	    finally { try { if (connection != null) connection.close(); } catch (Throwable t) {} }
+		} catch (SQLException e){
+            if (e.getErrorCode() == INEXISTENT_COLUMN_ERROR)
+                System.out.println("User friendly error message caused by column " + this.matchPattern(e.getMessage(), this.INEXISTENT_COLUMN_PATTERN));
+             if (e.getErrorCode() == DUPLICATE_DATA_ERROR)
+                 System.out.println("User friendly error message caused by duplicate data " + this.matchPattern(e.getMessage(), this.DUPLICATE_DATA_PATTERN));
+         }
 	}
 	
 	public List<Pet> getPets() throws SQLException {
