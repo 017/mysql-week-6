@@ -151,6 +151,7 @@ public class PetDao {
 	}
 	
 	public void createPet(
+				int pet_type_id_in,
 				int pet_breed_id_in,
 				String pet_name_in, 
 				String pet_gender_in,
@@ -158,6 +159,7 @@ public class PetDao {
 			) throws SQLException {
 		String query = "{call add_pet(?, ?, ?, ?, ?)}";
 		CallableStatement cs = connection.prepareCall(query);
+		cs.setInt(1, pet_type_id_in);
 		cs.setInt(2, pet_breed_id_in);
 		cs.setString(3, pet_name_in);
 		cs.setString(4, pet_gender_in);
