@@ -3,11 +3,10 @@ create database if not exists pet_db;
 use pet_db;
 
 drop table if exists pets;
-drop table if exists pet_types;
 drop table if exists breeds;
+drop table if exists pet_types;
 drop table if exists costumes; 
-
-);
+;
 
 create table pet_types (
     pet_type_id int(11) not null auto_increment,
@@ -20,7 +19,8 @@ create table breeds (
     pet_breed_name varchar(30),
     pet_min_lifespan int(11),
     pet_max_lifespan int(11),
-    primary key (pet_breed_id)
+    primary key (pet_breed_id),
+    foreign key (pet_breed_id) references pet_types(pet_type_id)
 );
 
 create table pets (
@@ -30,7 +30,10 @@ create table pets (
     pet_name varchar(30),
     pet_gender char(1),
     pet_birthday date,
-    primary key (pet_id)
+    primary key (pet_id),
+    foreign key (pet_type_id) references pet_types (pet_type_id),
+    foreign key (pet_breed_id) references breeds(pet_breed_id)
+
 );
 
 CREATE VIEW `pet_tables_combined` AS SELECT p.pet_id, p.pet_name, p.pet_gender, p.pet_birthday FROM `pets` AS p
