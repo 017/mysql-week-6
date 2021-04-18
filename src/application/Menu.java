@@ -85,10 +85,21 @@ public class Menu {
 	}
 
 	private void displayPetsByBreed() throws SQLException {
+		System.out.print("Enter Breed ID: ");
+		int id = Integer.parseInt(scanner.nextLine());
+		Pet pet = petDao.getPetByBreed(id);
+		System.out.println(pet.getPetBreedID() + ": " + pet.getPetName());
+		System.out.println("\tPet ID: " + pet.getPetID() + " Pet Name:" + pet.getPetName() + " Pet Type: " + pet.getPetTypeName());
 		
 	}
 
 	private void displayPetsByType() throws SQLException{
+		System.out.print("Enter Type ID: ");
+		int id = Integer.parseInt(scanner.nextLine());
+		Pet pet = petDao.getPetType(id);
+		System.out.println(pet.getPetTypeID() + ": " + pet.getPetName());
+		System.out.println("\tPet ID: " + pet.getPetID() + " Pet Name:" + pet.getPetName() + " Pet Type: " + pet.getPetTypeName());
+		
 		
 	}
 
