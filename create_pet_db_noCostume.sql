@@ -5,12 +5,8 @@ use pet_db;
 drop table if exists pets;
 drop table if exists pet_types;
 drop table if exists breeds;
+drop table if exists costumes; 
 
-create table costumes (
-    costume_id int(11) not null auto_increment,
-    costume_name varchar(30),
-    costume_desc varchar(120),
-    primary key (costume_id)
 );
 
 create table pet_types (
