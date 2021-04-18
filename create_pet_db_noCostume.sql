@@ -93,3 +93,6 @@ INSERT INTO pets (pet_id, pet_type_id, pet_breed_id, pet_name, pet_gender, pet_b
 VALUES (pet_id_input, pet_type_id_input, pet_breed_id_input, pet_name_input, pet_gender_input, pet_birthday_input);
 END$$
 DELIMITER ;
+
+CREATE VIEW `pet_tables_combined` AS SELECT p.pet_id, p.pet_name, p.pet_gender, p.pet_birthday FROM `pets` AS p
+INNER JOIN `breeds` AS b ON p.pet_breed_id = b.pet_breed_id INNER JOIN `pet_types` AS pt ON p.pet_type_id = pt.pet_type_id;

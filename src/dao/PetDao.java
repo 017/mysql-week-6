@@ -14,10 +14,6 @@ import entity.Pet;
 public class PetDao {
 	private Connection connection;
 	private Scanner scanner = new Scanner(System.in);
-
-	private final String GET_PETS_BY_TYPE_QUERY = null;
-
-	private final String GET_PETS_BY_BREED_QUERY = null;
 	private final String DELETE_PET_BY_ID_QUERY = "DELETE FROM pets WHERE pet_id = ?";
 	
 	//TODO: make a SQL procedure for editing pets
@@ -176,7 +172,29 @@ public class PetDao {
 		}
 		return pets;
 	}
-	
+
+	private final String GET_PETS_BY_BREED_QUERY = "SELECT * FROM pets WHERE pet_breed_name = ?";
+	public List<Pet> getPetByBreed(String targetString) throws SQLException {
+		PreparedStatement ps = connection.prepareStatement(GET_PETS_BY_BREED_QUERY);
+		ps.setString(1, targetString);
+		ResultSet rs = ps.executeQuery();
+		List<Pet> pets_by_breed = new ArrayList<Pet>();
+		
+		// TODO: change pets by type query to join pets with type table so we can retrieve data to add to the list here.
+		while (rs.next()) {
+			pets_by_breed.add(new Pet(
+				rs.getInt(1),
+				rs.getInt(2),
+				rs.getInt(3),
+				rs.getString(4),
+				rs.getString(5),
+				rs.getString(6)));
+		}
+		
+		return pets_by_breed;
+	}
+
+	private final String GET_PETS_BY_TYPE_QUERY = "SELECT * FROM pets WHERE pet_breed_name = ?";
 	public List<Pet> getPetsByType(String typeName) throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(GET_PETS_BY_TYPE_QUERY);
 		ps.setString(1, typeName);

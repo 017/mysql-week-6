@@ -88,7 +88,11 @@ public class Menu {
 	}
 
 	private void displayPetsByBreed() throws SQLException {
-		
+		System.out.print("Enter Pet Breed: ");
+		String targetString = scanner.nextLine();
+		Pet pet = petDao.getPetByBreed(targetString);
+		System.out.println(pet.getPetID() + ": " + pet.getPetName());
+		System.out.println("\tPet ID: " + pet.getPetID() + " Pet Name:" + pet.getPetName() + " Pet Type: " + pet.getPetTypeName());
 	}
 
 	private void displayPetsByType() throws SQLException{
