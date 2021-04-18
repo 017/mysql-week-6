@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import entity.Pet;
+import entity.PetType;
 
 public class PetDao {
 	private Connection connection;
@@ -225,5 +226,13 @@ public class PetDao {
 		
 		return new Pet(pet_id, pet_type_id, pet_breed_id, pet_name, pet_gender, pet_birthday);
 	}
+	
+	private PetType populatePetType(
+		int pet_type_id,
+		String pet_type_name) {
+		
+		return new PetType(pet_type_id, pet_type_name);
+	}
+
 
 }

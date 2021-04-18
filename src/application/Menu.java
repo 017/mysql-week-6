@@ -7,9 +7,6 @@ import java.util.Scanner;
 
 import dao.PetDao;
 import entity.Pet;
-//import entity.Type;
-//import entity.Breed;
-//import entity.Outfit;
 
 public class Menu {
 	private PetDao petDao = new PetDao();
@@ -88,11 +85,7 @@ public class Menu {
 	}
 
 	private void displayPetsByBreed() throws SQLException {
-		System.out.print("Enter Pet Breed: ");
-		String targetString = scanner.nextLine();
-		Pet pet = petDao.getPetByBreed(targetString);
-		System.out.println(pet.getPetID() + ": " + pet.getPetName());
-		System.out.println("\tPet ID: " + pet.getPetID() + " Pet Name:" + pet.getPetName() + " Pet Type: " + pet.getPetTypeName());
+		
 	}
 
 	private void displayPetsByType() throws SQLException{
