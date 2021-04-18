@@ -61,19 +61,17 @@ public class Menu {
 	}
 
 	private void createPet() throws SQLException {
-		System.out.print("Enter Pet ID: ");
-		int petID = Integer.parseInt(scanner.nextLine());
-		System.out.print("Enter Pet Type ID: ");
-		int typeID = Integer.parseInt(scanner.nextLine());
-		System.out.print("Enter Pet Breed ID: ");
-		int breedID = Integer.parseInt(scanner.nextLine());
+		System.out.print("Enter Pet Type Name: ");
+		int typeID = petDao.convertTypeNameToID(scanner.nextLine());
+		System.out.print("Enter Pet Breed Name: ");
+		int breedID = petDao.convertBreedNameToID(scanner.nextLine());
 		System.out.print("Enter Pet Name: ");
 		String petName = scanner.nextLine();
 		System.out.print("Enter Pet Gender: ");
 		String petGender = scanner.nextLine();
 		System.out.print("Enter Pet Birthday: ");
 		String petBirthday = scanner.nextLine();
-		petDao.createPet(petID, typeID, breedID, petName, petGender, petBirthday);
+		petDao.createPet(breedID, petName, petGender, petBirthday);
 	}
 
 	private void displayPetByID() throws SQLException {
