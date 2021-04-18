@@ -13,6 +13,20 @@ create table costumes (
     primary key (costume_id)
 );
 
+create table pet_types (
+    pet_type_id int(11) not null auto_increment,
+    pet_type_name varchar(30),
+    primary key (pet_type_id)
+);
+
+create table breeds (
+    pet_breed_id int(11) not null auto_increment,
+    pet_breed_name varchar(30),
+    pet_min_lifespan int(11),
+    pet_max_lifespan int(11),
+    primary key (pet_breed_id)
+);
+
 create table pets (
     pet_id int(11) not null auto_increment,
     pet_type_id int(11),
@@ -23,60 +37,45 @@ create table pets (
     primary key (pet_id)
 );
 
-create table pet_types (
-    pet_type_id int(11) not null auto_increment,
-    pet_breed_id int(11),
-    pet_type_name varchar(30),
-    primary key (pet_type_id)
-);
+CREATE VIEW `pet_tables_combined` AS SELECT p.pet_id, p.pet_name, p.pet_gender, p.pet_birthday FROM `pets` AS p
+INNER JOIN `breeds` AS b ON p.pet_breed_id = b.pet_breed_id INNER JOIN `pet_types` AS pt ON p.pet_type_id = pt.pet_type_id;
+Insert Into pets values (pet_id, 1, 3, 'Bean', 'M', '2020-03-27');
 
-create table breeds (
-    pet_breed_id int(11) not null auto_increment,
-    pet_type_id int(11),
-    pet_breed_name varchar(30),
-    pet_min_lifespan int(11),
-    pet_max_lifespan int(11),
-    primary key (pet_breed_id),
-    foreign key (pet_type_id) references pet_types(pet_type_id)
-);
+Insert Into pets values (pet_id, 2, 5, 'Bella', 'F', '2019-01-14');
 
-Insert Into pets values (pet_id, NULL, NULL, NULL, 'Bean', 'M', '2020-03-27');
+Insert Into pets values (pet_id, 3, 7, 'Jasper', 'M', '2021-04-15');
 
-Insert Into pets values (pet_id, NULL, NULL, NULL, 'Bella', 'F', '2019-01-14');
+Insert Into pets values (pet_id, 2, 4, 'Oliver', 'M', '2007-06-05');
 
-Insert Into pets values (pet_id, NULL, NULL, NULL, 'Jasper', 'M', '2021-04-15');
+Insert Into pets values (pet_id, 1, 2, 'Sadie', 'F', '2001-08-22');
 
-Insert Into pets values (pet_id, NULL, NULL, NULL, 'Oliver', 'M', '2007-06-05');
-
-Insert Into pets values (pet_id, NULL, NULL, NULL, 'Sadie', 'F', '2001-08-22');
-
-Insert Into pets values (pet_id, NULL, NULL, NULL, 'Max', 'M', '2019-01-14');
+Insert Into pets values (pet_id, 3, 8, 'Max', 'M', '2019-01-14');
 
 
 
-Insert Into pet_types values (NULL, NULL, 'Dog');
+Insert Into pet_types values (1, 'Dog');
 
-Insert Into pet_types values (NULL, NULL, 'Cat');
+Insert Into pet_types values (2, 'Cat');
 
-Insert Into pet_types values (NULL, NULL, 'Bird');
+Insert Into pet_types values (3, 'Bird');
 
 
 
-Insert Into breeds values (NULL, NULL, 'GOLDEN RETRIVER', 0, 12);
+Insert Into breeds values (1, 'GOLDEN RETRIVER', 0, 12);
 
-Insert Into breeds values (NULL, NULL, 'GERMAN SHEPHERD', 0, 13);
+Insert Into breeds values (2, 'GERMAN SHEPHERD', 0, 13);
 
-Insert Into breeds values (NULL, NULL, 'SIBERIAN HUSKY', 0, 15);
+Insert Into breeds values (3, 'SIBERIAN HUSKY', 0, 15);
 
-Insert Into breeds values (NULL, NULL, 'SIAMESE', 0, 12);
+Insert Into breeds values (4, 'SIAMESE', 0, 12);
 
-Insert Into breeds values (NULL, NULL, 'NORWEGIAN FOREST CAT', 0, 14);
+Insert Into breeds values (5, 'NORWEGIAN FOREST CAT', 0, 14);
 
-Insert Into breeds values (NULL, NULL, 'TURKISH ANGORA', 0, 18);
+Insert Into breeds values (6, 'TURKISH ANGORA', 0, 18);
 
-Insert Into breeds values (NULL, NULL, 'PARROT', 40, 80);
+Insert Into breeds values (7, 'PARROT', 40, 80);
 
-Insert Into breeds values (NULL, NULL, 'COCKATIEL', 10, 14);
+Insert Into breeds values (8, 'COCKATIEL', 10, 14);
 
 
 DELIMITER $$
@@ -93,6 +92,3 @@ INSERT INTO pets (pet_id, pet_type_id, pet_breed_id, pet_name, pet_gender, pet_b
 VALUES (pet_id_input, pet_type_id_input, pet_breed_id_input, pet_name_input, pet_gender_input, pet_birthday_input);
 END$$
 DELIMITER ;
-
-CREATE VIEW `pet_tables_combined` AS SELECT p.pet_id, p.pet_name, p.pet_gender, p.pet_birthday FROM `pets` AS p
-INNER JOIN `breeds` AS b ON p.pet_breed_id = b.pet_breed_id INNER JOIN `pet_types` AS pt ON p.pet_type_id = pt.pet_type_id;
