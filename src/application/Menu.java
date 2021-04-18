@@ -84,21 +84,29 @@ public class Menu {
 
 	private void displayPetsByBreed() throws SQLException {
 		System.out.print("Enter Breed ID: ");
-		int id = Integer.parseInt(scanner.nextLine());
-		Pet pet = petDao.getPetByBreed(id);
-		System.out.println(pet.getPetBreedID() + ": " + pet.getPetName());
-		System.out.println("\tPet ID: " + pet.getPetID() + " Pet Name:" + pet.getPetName() + " Pet Type: " + pet.getPetTypeName());
+		int id = petDao.convertBreedNameToID(scanner.nextLine());
+		List<Pet> pets = petDao.getPetByBreed(id);
+		for (Pet pet : pets) {
+			System.out.println(
+			pet.getPetID() + ": Name: " + 
+			pet.getPetName() + " | Type: " + 
+			pet.getPetTypeName() + " | Breed: " + 
+			pet.getPetBreedName());
+		}
 		
 	}
 
 	private void displayPetsByType() throws SQLException{
-		System.out.print("Enter Type ID: ");
-		int id = Integer.parseInt(scanner.nextLine());
-		Pet pet = petDao.getPetType(id);
-		System.out.println(pet.getPetTypeID() + ": " + pet.getPetName());
-		System.out.println("\tPet ID: " + pet.getPetID() + " Pet Name:" + pet.getPetName() + " Pet Type: " + pet.getPetTypeName());
-		
-		
+		System.out.print("Enter Pet Type Name: ");
+		int id = petDao.convertTypeNameToID(scanner.nextLine());
+		List<Pet> pets = petDao.getPetsByType(id);
+		for (Pet pet : pets) {
+			System.out.println(
+			pet.getPetID() + ": Name: " + 
+			pet.getPetName() + " | Type: " + 
+			pet.getPetTypeName() + " | Breed: " + 
+			pet.getPetBreedName());
+		}
 	}
 
 	private void displayallPets() throws SQLException {

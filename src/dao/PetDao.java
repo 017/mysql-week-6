@@ -183,10 +183,10 @@ public class PetDao {
 		return pets;
 	}
 
-	private final String GET_PETS_BY_BREED_QUERY = "SELECT * FROM pets WHERE pet_breed_name = ?";
-	public List<Pet> getPetByBreed(String targetString) throws SQLException {
+	private final String GET_PETS_BY_BREED_QUERY = "SELECT * FROM pets WHERE pet_breed_id = ?";
+	public List<Pet> getPetByBreed(int target) throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(GET_PETS_BY_BREED_QUERY);
-		ps.setString(1, targetString);
+		ps.setInt(1, target);
 		ResultSet rs = ps.executeQuery();
 		List<Pet> pets_by_breed = new ArrayList<Pet>();
 		
@@ -204,10 +204,10 @@ public class PetDao {
 		return pets_by_breed;
 	}
 
-	private final String GET_PETS_BY_TYPE_QUERY = "SELECT * FROM pets WHERE pet_breed_name = ?";
-	public List<Pet> getPetsByType(String typeName) throws SQLException {
+	private final String GET_PETS_BY_TYPE_QUERY = "SELECT * FROM pets WHERE pet_type_id = ?";
+	public List<Pet> getPetsByType(int typeID) throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(GET_PETS_BY_TYPE_QUERY);
-		ps.setString(1, typeName);
+		ps.setInt(1, typeID);
 		ResultSet rs = ps.executeQuery();
 		List<Pet> pets_by_type = new ArrayList<Pet>();
 		
