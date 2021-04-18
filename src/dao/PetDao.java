@@ -60,14 +60,13 @@ public class PetDao {
 		ps.setString(7, new_pet_gender);
 		ps.setString(8, new_pet_birthday);
 		ResultSet rs = ps.executeQuery();
-		if (rs.next()) return populatePet(
+		return populatePet(
 			rs.getInt(1),
 			rs.getInt(2),
 			rs.getInt(3),
 			rs.getString(4),
 			rs.getString(5),
 			rs.getString(6));
-		throw new RuntimeException("Result set is empty");
 	}
 
 	private final String GET_PET_BREED_BY_NAME = "SELECT pet_breed_id FROM breeds WHERE pet_breed_name = ?";
