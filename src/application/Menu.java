@@ -73,6 +73,20 @@ public class Menu {
 		String petBirthday = scanner.nextLine();
 		petDao.createPet(typeID, breedID, petName, petGender, petBirthday);
 	}
+	
+	private void createPetType() throws SQLException {
+
+		System.out.print("Enter Pet Type Name: ");
+		String typeName = scanner.nextLine();
+		petDao.createPetType(typeName);
+	}
+	
+	private void createPetBreed() throws SQLException {
+
+		System.out.print("Enter Pet Breed Name: ");
+		String breedName = scanner.nextLine();
+		petDao.createPetBreed(breedName);
+	}
 
 	private void displayPetByID() throws SQLException {
 		System.out.print("Enter Pet ID: ");

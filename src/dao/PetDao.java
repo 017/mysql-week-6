@@ -67,7 +67,7 @@ public class PetDao {
 			rs.getString(6));
 	}
 
-	private final String GET_PET_BREED_BY_NAME = "SELECT pet_breed_id FROM breeds WHERE pet_breed_name = ?";
+	private final String GET_PET_BREED_BY_NAME = "SELECT pet_breed_id FROM pet_breeds WHERE pet_breed_name = ?";
 	public int convertBreedNameToID(String input_breed_name) throws SQLException {
 		int result_id = 0;
 		
@@ -81,7 +81,7 @@ public class PetDao {
 		if (result_id > 0) {
 			return result_id;
 		} else {
-			return breedAdd();
+			return this.breedAdd(input_breed_name);
 		}
 	}
 
@@ -101,33 +101,40 @@ public class PetDao {
 			return result_id;
 		} else {
 			// If it doesn't find anything, default the ID to the type table length +1, inserting it as the next ID.
-			return typeAdd();
+			return this.typeAdd(inputted_name);
 		}
+	}
+
+	private void checkTypeID(int result_id) throws SQLException {
+		// TODO write SQL to check result ID in DB, if ID 
+		
 	}
 
 	// COUNT(*) query the types table and get a number from that, +1 to add the next numeric ID.
 	private final String GET_TYPE_LENGTH = "SELECT COUNT(*) FROM pet_types";
-	private int typeAdd() throws SQLException {
+	private int typeAdd(String name) throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(GET_TYPE_LENGTH);
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
-			int result = rs.getInt(1) +1;
-			return result;
-		} else {
-			return 1;
-		}
+			int id = rs.getInt(1) + 1;
+			System.out.print("[" + name + "] Creating Pet Type.");
+			this.createPetType(name);
+			int res = rs.getInt(1);
+			return res;
+		} else return 0;
 	}
 
-	private final String GET_BREED_LENGTH = "SELECT COUNT(*) FROM breeds";
-	private int breedAdd() throws SQLException {
-		PreparedStatement ps = connection.prepareStatement(GET_TYPE_LENGTH);
+	private final String GET_BREED_LENGTH = "SELECT COUNT(*) FROM pet_breeds";
+	private int breedAdd(String name) throws SQLException {
+		PreparedStatement ps = connection.prepareStatement(GET_BREED_LENGTH);
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
-			int result = rs.getInt(1) +1;
-			return result;
-		} else {
-			return 1;
-		}
+			int id = rs.getInt(1) + 1;
+			System.out.print("[" + name + "] Creating Pet Breed.");
+			this.createPetBreed(name);
+			int res = rs.getInt(1);
+			return res;
+		} else return 0;
 	}
 	
 	private final String GET_PET_BY_ID_QUERY = "SELECT * FROM pets WHERE pet_id = ?";
@@ -166,6 +173,20 @@ public class PetDao {
 		cs.setString(5, pet_birthday_in);
 		cs.executeQuery();
 		
+	}
+
+	private final String CREATE_PET_TYPE = "{call add_pet_type(5?)}";
+	public void createPetType(String name) throws SQLException {
+		CallableStatement cs = connection.prepareCall(CREATE_PET_TYPE);
+		cs.setString(1, name);
+		cs.executeQuery();
+	}
+
+	private final String CREATE_PET_BREED = "{call add_pet_breed(?)}";
+	public void createPetBreed(String name) throws SQLException {
+		CallableStatement cs = connection.prepareCall(CREATE_PET_BREED);
+		cs.setString(1, name);
+		cs.executeQuery();
 	}
 
 	private final String GET_PETS_QUERY = "SELECT * FROM pets";
