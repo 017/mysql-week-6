@@ -145,12 +145,12 @@ public class PetDao {
 		Pet result = null;
 		if (rs.next()) {
 			result = populatePet(
-					rs.getInt(1),
-					rs.getInt(2),
-					rs.getInt(3),
-					rs.getString(4),
-					rs.getString(5),
-					rs.getString(6));
+				rs.getInt(1),
+				rs.getInt(2),
+				rs.getInt(3),
+				rs.getString(4),
+				rs.getString(5),
+				rs.getString(6));
 		} else {
 			result = populatePet(-1, -1, -1, "No Data", "No Data", "No Data");
 		}
