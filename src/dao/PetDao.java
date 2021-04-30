@@ -34,14 +34,15 @@ public class PetDao {
 	}
 	
 	// 5 Parameters + Target ID
-	private final String EDIT_PET_BY_ID_QUERY = "UPDATE pets SET pet_type_id = ?, "
+	private final String EDIT_PET_BY_ID_QUERY = "UPDATE pets"
+		+ "SET pet_type_id = ?, "
 		+ "pet_breed_id = ? "
 		+ "pet_name = ? "
 		+ "pet_gender = ? "
 		+ "pet_birthday = ? "
-		+ "WHERE id = ?";
+		+ "WHERE pet_id = ?";
 	
-	public Pet editPetByID(int pet_target_id) throws SQLException {
+	public void editPetByID(int pet_target_id) throws SQLException {
 		System.out.println("Pet Current Data: ");
 		Pet current = this.getPetByID(pet_target_id);
 		System.out.println("Name: " + current.getPetName());
@@ -69,14 +70,7 @@ public class PetDao {
 		ps.setString(3, new_pet_name);
 		ps.setString(4, new_pet_gender);
 		ps.setString(5, new_pet_birthday);
-		ResultSet rs = ps.executeQuery();
-		return populatePet(
-			rs.getInt(1),
-			rs.getInt(2),
-			rs.getInt(3),
-			rs.getString(4),
-			rs.getString(5),
-			rs.getString(6));
+		ps.executeUpdate();
 	}
 
 	private final String GET_PET_BREED_BY_NAME = "SELECT pet_breed_id FROM pet_breeds WHERE pet_breed_name = ?";
