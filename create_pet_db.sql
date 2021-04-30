@@ -29,7 +29,7 @@ create table pets (
     pet_breed_id int(4),
     pet_name varchar(30),
     pet_gender char(1),
-    pet_birthday date,
+    pet_birthday varchar(30),
     primary key (pet_id),
     foreign key (pet_type_id) references pet_types (pet_type_id),
     foreign key (pet_breed_id) references pet_breeds(pet_breed_id)
@@ -95,5 +95,5 @@ CALL add_pet(1, 2, 'Sadie', 'F', '2001-08-22');
 CALL add_pet(3, 8, 'Max', 'M', '2019-01-14');
 
 
-CREATE VIEW `pet_tables_combined` AS SELECT p.pet_id, pb.pet_name, p.pet_gender, p.pet_birthday FROM `pets` AS p
+CREATE VIEW `pet_tables_combined` AS SELECT p.pet_id, p.pet_name, p.pet_gender, p.pet_birthday FROM `pets` AS p
 INNER JOIN `pet_breeds` AS b ON p.pet_breed_id = b.pet_breed_id INNER JOIN `pet_types` AS pt ON p.pet_type_id = pt.pet_type_id;

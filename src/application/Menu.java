@@ -1,6 +1,7 @@
 package application;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -85,7 +86,7 @@ public class Menu {
 
 		System.out.print("Enter Pet Breed Name: ");
 		String breedName = scanner.nextLine();
-		petDao.createPetBreed(breedName);
+		petDao.createPetBreed(breedName, 10, 16);
 	}
 
 	private void displayPetByID() throws SQLException {
@@ -110,7 +111,7 @@ public class Menu {
 		
 	}
 
-	private void displayPetsByType() throws SQLException{
+	private void displayPetsByType() throws SQLException {
 		System.out.print("Enter Pet Type Name: ");
 		int id = petDao.convertTypeNameToID(scanner.nextLine());
 		List<Pet> pets = petDao.getPetsByType(id);
