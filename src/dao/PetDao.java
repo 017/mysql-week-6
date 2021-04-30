@@ -18,9 +18,8 @@ public class PetDao {
 	private Scanner scanner = new Scanner(System.in);
 	private final String DELETE_PET_BY_ID_QUERY = "DELETE FROM pets WHERE pet_id = ?";
 	
-	//TODO: make a SQL procedure for editing pets
-	private final String EDIT_PET_BY_ID_QUERY = "";
-	
+
+		
     private final String INEXISTENT_COLUMN_PATTERN = "?";
     private final String DUPLICATE_DATA_PATTERN = "?";
 	
@@ -34,8 +33,23 @@ public class PetDao {
 		ps.executeUpdate();
 	}
 	
-	// might not work yet
+	// 5 Parameters + Target ID
+	private final String EDIT_PET_BY_ID_QUERY = "UPDATE pets SET pet_type_id = ?, "
+		+ "pet_breed_id = ? "
+		+ "pet_name = ? "
+		+ "pet_gender = ? "
+		+ "pet_birthday = ? "
+		+ "WHERE id = ?";
+	
 	public Pet editPetByID(int pet_target_id) throws SQLException {
+		System.out.println("Pet Current Data: ");
+		Pet current = this.getPetByID(pet_target_id);
+		System.out.println("Name: " + current.getPetName());
+		System.out.println("Gender: " + current.getPetGender());
+		System.out.println("Birthday: " + current.getPetBirthday());
+		System.out.println("Type: " + current.getPetTypeName());
+		System.out.println("Breed: " + current.getPetBreedName());
+		System.out.println("END Current Data");
 		PreparedStatement ps = connection.prepareStatement(EDIT_PET_BY_ID_QUERY);
 		System.out.print("Enter New Pet Name: ");
 		String new_pet_name = scanner.nextLine();
@@ -49,14 +63,12 @@ public class PetDao {
 		System.out.print("Enter New Pet Breed: (Bulldog, Shiba Inu, Pug, Bombay, etc.)");
 		String new_pet_breed = scanner.nextLine();
 		int new_pet_breed_id = convertBreedNameToID(new_pet_breed);
-		ps.setInt(1, pet_target_id);
-		ps.setInt(2, new_pet_type_id);
-		ps.setInt(3, new_pet_breed_id);
-		ps.setString(4, new_pet_name);
-		ps.setString(5, new_pet_type);
-		ps.setString(6, new_pet_breed);
-		ps.setString(7, new_pet_gender);
-		ps.setString(8, new_pet_birthday);
+		ps.setInt(6, pet_target_id);
+		ps.setInt(1, new_pet_type_id);
+		ps.setInt(2, new_pet_breed_id);
+		ps.setString(3, new_pet_name);
+		ps.setString(4, new_pet_gender);
+		ps.setString(5, new_pet_birthday);
 		ResultSet rs = ps.executeQuery();
 		return populatePet(
 			rs.getInt(1),
@@ -206,8 +218,37 @@ public class PetDao {
 		return pets;
 	}
 
-	private final String GET_PETS_BY_BREED_QUERY = "SELECT * FROM pets WHERE pet_breed_id = ?";
-	public List<Pet> getPetByBreed(int target) throws SQLException {
+	public final String GET_BREED_BY_ID_QUERY = "SELECT 1 FROM pet_breeds WHERE pet_breed_id = ?";
+	public String getBreedNameByID(int target) throws SQLException {
+		PreparedStatement ps = connection.prepareStatement(GET_BREED_BY_ID_QUERY);
+		ps.setInt(1, target);
+		ResultSet rs = ps.executeQuery();
+		
+		while (rs.next()) {
+			String name = rs.getString(1);
+			
+			return name;
+		}
+		
+		return "404";
+	}
+
+	public final String GET_TYPE_BY_ID_QUERY = "SELECT 1 FROM pet_types WHERE pet_type_id = ?";
+	public String getTypeNameByID(int target) throws SQLException {
+		PreparedStatement ps = connection.prepareStatement(GET_TYPE_BY_ID_QUERY);
+		ps.setInt(1, target);
+		ResultSet rs = ps.executeQuery();
+		
+		while (rs.next()) {
+			String name = rs.getString(1);
+			
+			return name;
+		}
+		return "404";
+	}
+
+	public final String GET_PETS_BY_BREED_QUERY = "SELECT * FROM pets WHERE pet_breed_id = ?";
+	public List<Pet> getPetsByBreed(int target) throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(GET_PETS_BY_BREED_QUERY);
 		ps.setInt(1, target);
 		ResultSet rs = ps.executeQuery();
@@ -227,7 +268,7 @@ public class PetDao {
 		return pets_by_breed;
 	}
 
-	private final String GET_PETS_BY_TYPE_QUERY = "SELECT * FROM pets WHERE pet_type_id = ?";
+	public final String GET_PETS_BY_TYPE_QUERY = "SELECT * FROM pets WHERE pet_type_id = ?";
 	public List<Pet> getPetsByType(int typeID) throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(GET_PETS_BY_TYPE_QUERY);
 		ps.setInt(1, typeID);

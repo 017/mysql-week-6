@@ -97,9 +97,9 @@ public class Menu {
 	}
 
 	private void displayPetsByBreed() throws SQLException {
-		System.out.print("Enter Breed ID: ");
+		System.out.print("Enter Pet Breed Name: ");
 		int id = petDao.convertBreedNameToID(scanner.nextLine());
-		List<Pet> pets = petDao.getPetByBreed(id);
+		List<Pet> pets = petDao.getPetsByBreed(id);
 		for (Pet pet : pets) {
 			System.out.println(
 			pet.getPetID() + ": Name: " + 

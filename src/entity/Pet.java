@@ -1,4 +1,6 @@
 package entity;
+import entity.PetBreed;
+import java.sql.SQLException;
 
 public class Pet {
 	private int pet_id;
@@ -10,6 +12,7 @@ public class Pet {
 	private String pet_breed_name;
 	private String pet_gender;
 	private String pet_birthday;
+	private PetBreed PetBreed = new PetBreed(pet_breed_id, pet_birthday);
 	
 	public Pet(
 			int pet_id_input,
@@ -26,11 +29,9 @@ public class Pet {
 		this.setPetBirthday(pet_birthday_input);
 		// Pet Type (Dog, Cat, Bird, etc.)
 		this.setPetTypeID(pet_type_id_input);
-		//this.setPetTypeName(pet_type_name_input);
 		// Set Pet Breed ID & Type
 		this.setPetBreedID(pet_breed_id_input);
 		//this.setPetBreedName(pet_breed_name_input);
-		//this.setPetCostume(pet_costume_id_input);
 	}
 
 	private void setPetGender(String pet_gender_input) {
@@ -85,7 +86,9 @@ public class Pet {
 		return this.pet_type_id;
 	}
 	
-	public String getPetBreedName() {
+	public String getPetBreedName() throws SQLException {
+		int id = this.pet_breed_id;
+		this.pet_breed_name = entity.PetBreed.getPetBreedName(id);
 		return this.pet_breed_name;
 	}
 	
